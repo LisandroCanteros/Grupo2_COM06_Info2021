@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+  Registro
+{% endblock %}
+
+{% block content %}
+
+  <form method="post">
+    <div class="ml-2">
+      {% csrf_token %}
+      {{form.as_p}}
+
+      <button type="submit" class="btn btn-outline-primary" name="button">Crear cuenta</button>
+
+    </div>
+  </form>
+
+
+{% endblock %}

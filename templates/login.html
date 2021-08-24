@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+  Iniciar sesión
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="text-center">
+      <!-- muestra mensaje de error al ingresar usuario o contraseñas incorrectos -->
+      {% for message in messages %}
+          <div class="alert alert-danger mx-auto mt-3" style="width: 350px;" role="alert">
+              <a class="close" href="" data-dismiss="alert">×</a>
+                 {{ message }}
+          </div>
+      {% endfor %}
+
+      <h3>Iniciar sesión</h3>
+      {{form.as_p}}
+      <button type="submit" class="btn btn-outline-primary mb-3" name="button">Iniciar sesión</button>
+
+      <div class="alert alert-info" role="alert">
+        Si no tenés cuenta, clickea <a href="{% url 'registro' %}" class="alert-link">acá</a> para crearla.
+      </div>
+
+    </div>
+  </form>
+
+{% endblock %}
