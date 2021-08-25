@@ -2,7 +2,7 @@
 
 Proyecto final - Informatorio Chaco - Etapa 2: "Programación y desarrollo web"
 
-Integrantes:
-    Fátima Loreley Del Fabro
-    Lisandro Ariel Canteros
+Integrantes:  
+    Fátima Loreley Del Fabro  
+    Lisandro Ariel Canteros  
     Matías Eduardo Lepore
