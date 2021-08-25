@@ -5,7 +5,7 @@ from .views import (
     guardar_resultados,
     )
 
-app_name = "quiz"
+app_name = "cuestionario"
 
 urlpatterns =[
     path("", pagina_principal, name="pagina_principal"),

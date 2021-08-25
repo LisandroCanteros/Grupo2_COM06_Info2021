@@ -72,7 +72,7 @@ def guardar_resultados(request, categoria, pk):
         print(usuario, cuest)
 
         puntaje = 0
-        multiplicador = 100 / cuest.max_preguntas
+        multiplicador = 100 / len(lista_preguntas)
         resultados = []
         respuesta_correcta = None
 
