@@ -12,12 +12,13 @@
           <li class="nav-item">
               <a class="nav-link" href="/">Inicio</a>
           </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Acerca de</a>
-          </li>
 
           <!-- si el usuario está registrado, mostrar botón para cerrar sesión sino mostrar registro e inciar sesión -->
           {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'perfil' request.user %}">Mi perfil</a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
             </li>

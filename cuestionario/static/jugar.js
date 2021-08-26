@@ -23,11 +23,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function fbshareCurrentPage()
-  {window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(window.location.href)+"&t="+document.title, '',
-  'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
-return false; }
-
 
 const startTimer = (tiempo_limite)=> {
   if(tiempo_limite.toString().length < 2){
@@ -65,7 +60,9 @@ const startTimer = (tiempo_limite)=> {
         clearInterval(Timer)
         alert("TIME OVER")
         enviarDatos()
-        cuadroResultados.innerHTML =`<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">Facebook</a>`
+        cuadroResultados.innerHTML =`<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">Facebook</a>
+        `
+
       })
     }
 
@@ -77,9 +74,6 @@ const startTimer = (tiempo_limite)=> {
       let segundos_empleados = 60 - segundos
 
       cuadroTimer.innerHTML = `Tiempo empleado: <b>${minutos_empleados} minutos ${segundos_empleados} segundos</b> <br>`
-      cuadroResultados.innerHTML =`<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">Facebook</a>`
-
-
     })
 
     cuadroTimer.innerHTML = `Tiempo restante: <b>${displayMinutos}:${displaySegundos}</b>`
@@ -143,7 +137,6 @@ const enviarDatos = () => {
     success: function(response){
       const resultados = response.resultado //haciendo uso de response se pueden acceder a los valores pasados como diccionario desde la vista (guardar_resultados)
       cuestForm.classList.add('not-visible') //escondo el formulario (las opciones)
-
       cuadroPuntaje.innerHTML =`${response.aprobado? 'Aprobado. ' : 'Desaprobado. '} Tu puntaje es: ${response.puntaje.toFixed(2)}% <br> `
 
 
@@ -151,7 +144,6 @@ const enviarDatos = () => {
           const resDiv = document.createElement("div")
           for (const [pregunta, rta] of Object.entries(result)){ //para cada resultado separo pregunta y respuesta
             resDiv.innerHTML += pregunta
-            console.log(pregunta, rta);
             const cls = ['container', 'p-3', 'text-light', 'h3'] //estilos a aplicar a los resultados mostrados
             resDiv.classList.add(...cls)
 

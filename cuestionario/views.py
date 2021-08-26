@@ -64,18 +64,14 @@ def guardar_resultados(request, categoria, pk):
         for preg, rta in data_.items():
             pregunta = Pregunta.objects.get(texto=preg)
             lista_preguntas.append(pregunta)
-        print(lista_preguntas)
 
         usuario = request.user
         cuest = Cuestionario.objects.get(pk=pk)
-        print(type(cuest))
-        print(usuario, cuest)
 
         puntaje = 0
         multiplicador = 100 / len(lista_preguntas)
         resultados = []
         respuesta_correcta = None
-
         for pregunta in lista_preguntas:                  #loop sobre todas las preguntas
             rta_elegida = request.POST.get(pregunta.texto)
 
@@ -103,9 +99,58 @@ def guardar_resultados(request, categoria, pk):
                 resultados.append({str(pregunta): {'rta_correcta': rta_correcta, "rta_elegida": "Sin responder"}})
 
         puntaje_ = puntaje * multiplicador
-        Resultado.objects.create(cuestionario=cuest, usuario=usuario, puntaje=puntaje_)
+        lista_preguntas_ = []
+        for pregunta in lista_preguntas:
+            lista_preguntas_.append(pregunta.texto)
 
+
+        resultado = Resultado.objects.create(cuestionario=cuest, usuario=usuario, preguntas=lista_preguntas_, respuestas=resultados, puntaje=puntaje_)
         if puntaje_ >= cuest.puntaje_para_aprobar:
             return JsonResponse({'aprobado': True, 'puntaje':puntaje_, 'resultado': resultados})
         else:
             return JsonResponse({'aprobado': False, 'puntaje':puntaje_, 'resultado': resultados})
+
+def resultado(request, pk):
+    resultado = Resultado.objects.get(pk=pk)
+    preg_y_resp_lista = resultado.respuestas.split('}},')
+    preguntas_respuestas = []
+    preguntas = []
+    respuestas = []
+    respuestas_elegidas = []
+    respuestas_correctas = []
+    aux = []
+
+    for preg_resp in preg_y_resp_lista:
+         preguntas_respuestas.append(preg_resp.replace("{", "").replace("}","").replace("'","").replace("rta_correcta", "Respuesta correcta").replace("rta_elegida", "Respuesta elegida").replace("[", "").replace("]", ""))
+
+    for elemento in preguntas_respuestas:
+        preguntas.append(elemento.split("Respuesta correcta")[0].split("Respuesta elegida"))
+
+    for pregunta in preguntas:
+        for elto in pregunta:
+            elto.replace("[", "").replace("]", "")
+            for el in range(len(preguntas_respuestas)):
+                preguntas_respuestas[el] = preguntas_respuestas[el].replace(elto, "")
+
+    for elemento in preguntas_respuestas:
+        aux = (elemento.split(','))
+        respuestas_elegidas.append(aux[1])
+
+    aux *= 0
+
+    for elemento in preguntas_respuestas:
+        aux = (elemento.split(','))
+        respuestas_correctas.append(aux[0])
+
+    for pregunta in range(len(preguntas)):
+        preguntas[pregunta] = preguntas[pregunta][0].replace("[", "").replace("]", "")
+
+    print(preguntas)
+    print(respuestas_correctas)
+    print(respuestas_elegidas)
+
+    context = {
+        "resultado": resultado,
+        "zip": zip(preguntas, respuestas_correctas, respuestas_elegidas)
+    }
+    return render(request, "resultado.html", context)

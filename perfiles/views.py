@@ -2,8 +2,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from resultados.models import Resultado
+from cuestionario.models import Cuestionario
 
 from .formulario import Registro, LoginForm
+
 # Create your views here.
 def UserSignUp(request):
     if request.method == "POST":
@@ -44,3 +47,26 @@ def UserLogin(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+def UserProfile(request, nombre):
+    usuario = request.user
+    if usuario.is_authenticated:
+        resultados = Resultado.objects.filter(usuario=request.user).values()
+        lista_resultados = []
+
+        for resultado in resultados:
+            puntaje = int(resultado['puntaje'])
+            cuest_id = (resultado['cuestionario_id'])
+            fecha = resultado['fecha']
+            cuestionario = Cuestionario.objects.filter(pk=cuest_id).values()
+            cuest_nombre = cuestionario[0]['nombre']
+            id = resultado['id']
+            lista_resultados.append((id, cuest_nombre, puntaje, fecha))
+
+        print(lista_resultados)
+        context = {
+            'resultados': lista_resultados
+        }
+        return render(request, "perfil.html", context)
+    else:
+        return redirect('login')

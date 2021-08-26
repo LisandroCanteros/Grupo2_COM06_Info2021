@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block scripts %}
+<script type="text/javascript">
+  function fbshareCurrentPage()
+    {window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(window.location.href)+"&t="+document.title, '',
+    'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+  return false; }
+</script>
+{% endblock %}
+
+{% block titulo %}
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h1>Usuario: {{ request.user }}
+  <br>
+  {{resultado.cuestionario}}
+  <br>
+  {{resultado.puntaje}}
+  <br>
+  </h1>
+</div>
+
+
+<h3>
+  {% for pregunta, rcorrecta,relegida in zip %}
+
+    {% if relegida|slice:"19:" == rcorrecta|slice:"19:" %}
+      <div class="alert alert-success" role="alert">
+        {{pregunta}}<br>
+        {{relegida}}<br>
+        {{rcorrecta}}<br>
+      </div>
+    {% else %}
+      <div class="alert alert-danger" role="alert">
+        {{pregunta}}<br>
+        {{relegida}}<br>
+        {{rcorrecta}}<br>
+      </div>
+    {% endif %}
+  <hr>
+  {% endfor %}
+</h3>
+
+<a class="btn btn-default" href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">
+  <img src="/static/facebook_share.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+</a>
+
+
+{% endblock %}

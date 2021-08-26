@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block titulo %}
+  {{request.user}}
+{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+  <h1>Perfil de {{request.user}}</h1>
+</div>
+
+<h4>
+
+  {% for resultado in resultados %}
+  <p><a href="/resultado/{{resultado.0}}">
+    Cuestionario: {{ resultado.1 }}<br>
+    Realizado: {{ resultado.3 }}<br>
+    Puntaje: {{ resultado.2 }}<br>
+    ID: {{ resultado.0 }} <br>
+    <hr>
+    </a>
+  </p>
+  {% endfor %}
+</h4>
+
+
+{% endblock %}
