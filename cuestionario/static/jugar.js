@@ -96,7 +96,7 @@ $.ajax({
         respuestas.forEach(respuesta => {
           cuestionarioCuadro.innerHTML += `
             <div>
-              <input type="radio" class="respuesta" id="${pregunta}-${respuesta}" name="${pregunta}" value="${respuesta}">
+              <input type="checkbox" class="respuesta" id="${pregunta}-${respuesta}" name="${pregunta}" value="${respuesta}">
               <label for="${pregunta}"> ${respuesta} </label>
             </div>
           `
@@ -122,13 +122,20 @@ const enviarDatos = () => {
 
   rtas.forEach(rta =>{
     if (rta.checked){   //si esta respuesta está seleccionada
-      datos[rta.name] = rta.value // name(pregunta) y value(respuesta) están definidos más arriba en el segundo bloque html. Entonces básicamente se tiene la pregunta con la respuesta marcada.
+
+      if (datos[rta.name] == null){
+        datos[rta.name] = [rta.value] // name(pregunta) y value(respuesta) están definidos más arriba en el segundo bloque html. Entonces básicamente se tiene la pregunta con la respuesta marcada.
+      }else{
+        datos[rta.name].push(rta.value)
+      }
+
     }else{
       if (!datos[rta.name]){ //si una determinada pregunta no tiene respuesta seleccionada
         datos[rta.name] = null  // asignarle null
       }
     }
-  })
+  }
+)
 
   $.ajax({
     type: 'POST',

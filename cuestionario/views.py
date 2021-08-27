@@ -13,7 +13,7 @@ def pagina_principal(request):
 
 
 class CategoriasListView(ListView):
-    model = Cuestionario
+    model = Categoria
     template_name = "categorias.html"
 
 
@@ -58,12 +58,15 @@ def guardar_resultados(request, categoria, pk):
     if request.is_ajax():
         data = request.POST
         data_ = dict(data.lists())  # de los datos recibidos por ajax, los convierto en dict
-        data_.pop('csrfmiddlewaretoken') # elimino el token dejando las preguntas y respuestas
+        data_.pop('csrfmiddlewaretoken')
 
         lista_preguntas = []
+
         for preg, rta in data_.items():
+            preg = preg.replace("[]", "")
             pregunta = Pregunta.objects.get(texto=preg)
             lista_preguntas.append(pregunta)
+
 
         usuario = request.user
         cuest = Cuestionario.objects.get(pk=pk)
@@ -72,34 +75,37 @@ def guardar_resultados(request, categoria, pk):
         multiplicador = 100 / len(lista_preguntas)
         resultados = []
         respuesta_correcta = None
-        for pregunta in lista_preguntas:                  #loop sobre todas las preguntas
-            rta_elegida = request.POST.get(pregunta.texto)
 
-            if rta_elegida != "":
-                #loop respuestas contestadas
+        cont = 0
+        for pregunta in lista_preguntas:
+            for preg in data_.keys():
+                rta_elegidas = ""
+                rta_correctas = ""
+                pregunta_actual = preg.replace("[]", "")
                 respuestas = Respuesta.objects.filter(pregunta=pregunta)
+                for rta in data_[preg]:
+                    rta_elegidas += rta + " "
 
-                for rta in respuestas:
-                    if rta.texto == rta_elegida:
-                        if rta.es_correcta:
-                            puntaje += 1
-                            rta_correcta = rta.texto
-                    else:
-                        if rta.es_correcta:
-                            rta_correcta = rta.texto
+                for respuesta in respuestas:
+                    if respuesta.es_correcta:
+                        rta_correctas += respuesta.texto + " "
 
-                resultados.append({str(pregunta): {'rta_correcta': rta_correcta, "rta_elegida": rta_elegida}})
-            else:
-                # respuesta sin contestar
-                respuestas= Respuesta.objects.filter(pregunta=pregunta)
-                for rta in respuestas:
-                    if rta.es_correcta:
-                        rta_correcta = rta.texto
 
-                resultados.append({str(pregunta): {'rta_correcta': rta_correcta, "rta_elegida": "Sin responder"}})
+
+                if pregunta_actual == str(respuestas[cont].pregunta):
+                    if rta_elegidas == " ":
+                        rta_elegidas = "Sin contestar"
+                    elif rta_correctas == rta_elegidas:
+                        puntaje += 1
+
+                    resultados.append({str(pregunta): {'rta_correcta': rta_correctas, "rta_elegida": rta_elegidas}})
+
+            cont += 1
+
 
         puntaje_ = puntaje * multiplicador
         lista_preguntas_ = []
+
         for pregunta in lista_preguntas:
             lista_preguntas_.append(pregunta.texto)
 
@@ -145,9 +151,9 @@ def resultado(request, pk):
     for pregunta in range(len(preguntas)):
         preguntas[pregunta] = preguntas[pregunta][0].replace("[", "").replace("]", "")
 
-    print(preguntas)
-    print(respuestas_correctas)
-    print(respuestas_elegidas)
+    # print(preguntas)
+    # print(respuestas_correctas)
+    # print(respuestas_elegidas)
 
     context = {
         "resultado": resultado,

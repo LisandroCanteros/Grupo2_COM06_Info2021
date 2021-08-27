@@ -32,13 +32,11 @@
 </div>
 
 
+<h1>Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
+<hr>
 {% for obj in object_list %}
 <!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
   {% if obj.categoria|stringformat:"s" == request.path|slice:"12:-1" %}
-    <div class="h1 ml-3">
-      Cuestionarios de {{obj.categoria}}
-    </div>
-    <hr>
       <button
           class="btn btn-link modal-button"
           data-pk="{{obj.pk}}"
@@ -51,10 +49,10 @@
           data-bs-toggle="modal"
           data-bs-target="#comenzarCuestionarioModal">
           <h2>{{obj.nombre}} {{obj.categoria}}</h2>
-
         </button>
       <br>
     {% endif %}
+    
 {% endfor %}
 
 
