@@ -33,7 +33,6 @@ def cuestionario_vista(request, categoria, pk):
     context = {
         'obj': cuestionario
     }
-    print("---------", cuestionario)
     return render(request, "jugar.html", context)
 
 
@@ -125,7 +124,7 @@ def resultado(request, pk):
     respuestas_elegidas = []
     respuestas_correctas = []
     aux = []
-
+    print(preg_y_resp_lista)
     for preg_resp in preg_y_resp_lista:
          preguntas_respuestas.append(preg_resp.replace("{", "").replace("}","").replace("'","").replace("rta_correcta", "Respuesta correcta").replace("rta_elegida", "Respuesta elegida").replace("[", "").replace("]", ""))
 
@@ -149,9 +148,9 @@ def resultado(request, pk):
         respuestas_correctas.append(aux[0])
 
     for pregunta in range(len(preguntas)):
-        preguntas[pregunta] = preguntas[pregunta][0].replace("[", "").replace("]", "")
+        preguntas[pregunta] = preguntas[pregunta][0].replace("[", "").replace("]", "").replace(":", "")
 
-    # print(preguntas)
+    #print(preguntas)
     # print(respuestas_correctas)
     # print(respuestas_elegidas)
 

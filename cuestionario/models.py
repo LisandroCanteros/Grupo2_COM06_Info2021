@@ -3,7 +3,7 @@ import random
 # Create your models here.
 
 CATEGORIAS = (
-    ("Ciencia y Arte", "CIENCIA Y ARTE"),
+    ("Cultura y Arte", "CULTURA Y ARTE"),
     ("Historia", "HISTORIA"),
     ("Deportes", "DEPORTES"),
     ("Geografia", "GEOGRAFÍA"),
@@ -13,8 +13,8 @@ CATEGORIAS = (
 )
 
 class Categoria(models.Model):
-    categoria = models.CharField(max_length=150, choices = CATEGORIAS)
-    descripcion = models.CharField(max_length=200)
+    categoria = models.CharField(max_length=300, choices = CATEGORIAS)
+    descripcion = models.CharField(max_length=500)
 
     def __str__(self):
         return str(self.categoria)
@@ -27,8 +27,8 @@ DIFICULTADES = (
 )
 
 class Cuestionario(models.Model):
-    nombre = models.CharField(max_length=120)
-    descripcion = models.CharField(max_length=200)
+    nombre = models.CharField(max_length=300)
+    descripcion = models.CharField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     max_preguntas = models.IntegerField()
     tiempo_limite = models.IntegerField(help_text="duración del cuestionario")

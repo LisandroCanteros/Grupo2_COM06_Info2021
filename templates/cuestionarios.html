@@ -31,8 +31,8 @@
   </div>
 </div>
 
-
 <h1>Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
+<a class="btn btn-danger ml-3" href="/categorias/">Volver a categorías</a>
 <hr>
 {% for obj in object_list %}
 <!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
@@ -48,11 +48,11 @@
           data-puntaje_aprobacion="{{obj.puntaje_para_aprobar}}"
           data-bs-toggle="modal"
           data-bs-target="#comenzarCuestionarioModal">
-          <h2>{{obj.nombre}} {{obj.categoria}}</h2>
+          <h2>{{obj.nombre}}</h2>
         </button>
       <br>
     {% endif %}
-    
+
 {% endfor %}
 
 
