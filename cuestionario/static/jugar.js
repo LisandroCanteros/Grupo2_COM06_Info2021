@@ -95,8 +95,8 @@ $.ajax({
         `
         respuestas.forEach(respuesta => {
           cuestionarioCuadro.innerHTML += `
-            <div>
-              <input type="checkbox" class="respuesta" id="${pregunta}-${respuesta}" name="${pregunta}" value="${respuesta}">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input respuesta" id="${pregunta}-${respuesta}" name="${pregunta}" value="${respuesta}">
               <label for="${pregunta}"> ${respuesta} </label>
             </div>
           `

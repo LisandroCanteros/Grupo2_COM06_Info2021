@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+  Crear cuestionario
+{% endblock %}
+
+{% block content %}
+<div class="ml-3">
+  <form method="post">
+    <h1>Editar cuestionario</h1>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-outline-primary mb-3" name="button">Guardar</button>
+  </form>
+</div>
+
+
+{% endblock %}

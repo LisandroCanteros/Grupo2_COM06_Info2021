@@ -1,14 +1,9 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load social_share %}
 
 {% block scripts %}
-<script type="text/javascript">
-  function fbshareCurrentPage()
-    {window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(window.location.href)+"&t="+document.title, '',
-    'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
-  return false; }
-</script>
 {% endblock %}
 
 {% block titulo %}
@@ -47,10 +42,9 @@
 </h3>
 
 <div class="text-center h2">
-  Compartir
-  <a class="btn btn-default" href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">
-    <img src="/static/facebook_share.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-  </a>
+  {% post_to_whatsapp object_or_url "Compartir vía WhatsApp" %}
+  {% post_to_facebook object_or_url "Compartir en Facebook"  %}
+  {% post_to_twitter "Completé el cuestionario {{resultado.cuestionario}} y obtuve un puntaje de {{resultado.puntaje}}" object_or_url "Compartir en Twitter" %}
 </div>
 
 

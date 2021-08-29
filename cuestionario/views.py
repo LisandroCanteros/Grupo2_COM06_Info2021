@@ -1,32 +1,96 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from preguntas.models import Pregunta, Respuesta
 from resultados.models import Resultado
-
 from .models import Cuestionario, Categoria
+from .formularios import CuestionarioForm, RespuestaForm, PreguntaForm
 # Create your views here.
 
 def pagina_principal(request):
     return render(request, "pagina_principal.html")
 
+@staff_member_required
+def nuevo_cuestionario(request):
+    form = CuestionarioForm()
+
+    if request.method == "POST":
+        form = CuestionarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context = {'form': form}
+    return render(request, "nuevo_cuestionario.html", context)
+
+@staff_member_required
+def editar_cuestionario(request, pk):
+    cuestionario = Cuestionario.objects.get(pk=pk)
+    form = CuestionarioForm(instance=cuestionario)
+
+    if request.method == "POST":
+        form = CuestionarioForm(request.POST, instance=cuestionario)
+        if form.is_valid():
+            form.save()
+            return redirect("/categorias/")
+
+
+    context = {'form': form}
+    return render(request, "editar_cuestionario.html", context)
+
+@staff_member_required
+def eliminar_cuestionario(request, pk):
+    cuestionario = Cuestionario.objects.get(pk=pk)
+    if request.method == "POST":
+        cuestionario.delete()
+        return redirect("/categorias")
+    context = {'cuestionario': cuestionario}
+    return render(request, "eliminar_cuestionario.html", context)
+
+
+@staff_member_required
+def nueva_pregunta(request):
+    form = PreguntaForm()
+
+    if request.method == "POST":
+        form = PreguntaForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'form': form,
+    }
+    return render(request, "nueva_pregunta.html", context)
+
+
+@staff_member_required
+def nueva_respuesta(request):
+    form = RespuestaForm()
+
+    if request.method == "POST":
+        form = RespuestaForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'form': form,
+    }
+    return render(request, "nueva_respuesta.html", context)
 
 class CategoriasListView(ListView):
     model = Categoria
     template_name = "categorias.html"
 
-
 def categorias_vista(request, categoria):
     cuestionario = Cuestionario.objects.all().values('categoria')
     return render(request, "categorias.html", {'obj': cuestionario})
-
 
 class CuestionarioListView(ListView):
     model = Cuestionario
     template_name = "cuestionarios.html"
 
-
+@login_required(login_url='/login/')
 def cuestionario_vista(request, categoria, pk):
     # se obtiene la pk desde el navegador (urls.py) y con ella, se busca el cuestionario a la cual hace referencia (Cuestionario.objects.get())
     cuestionario = Cuestionario.objects.get(pk=pk) #esto devuelve un objeto cuestionario que tenga la pk especificada
@@ -35,7 +99,7 @@ def cuestionario_vista(request, categoria, pk):
     }
     return render(request, "jugar.html", context)
 
-
+@login_required(login_url='/login/')
 def cuestionario_datos(request, categoria, pk):
     cuestionario = Cuestionario.objects.get(pk=pk)
     preguntas = []
@@ -52,7 +116,7 @@ def cuestionario_datos(request, categoria, pk):
         }
     )
 
-
+@login_required(login_url='/login/')
 def guardar_resultados(request, categoria, pk):
     if request.is_ajax():
         data = request.POST
@@ -108,7 +172,6 @@ def guardar_resultados(request, categoria, pk):
         for pregunta in lista_preguntas:
             lista_preguntas_.append(pregunta.texto)
 
-
         resultado = Resultado.objects.create(cuestionario=cuest, usuario=usuario, preguntas=lista_preguntas_, respuestas=resultados, puntaje=puntaje_)
         if puntaje_ >= cuest.puntaje_para_aprobar:
             return JsonResponse({'aprobado': True, 'puntaje':puntaje_, 'resultado': resultados})
@@ -124,7 +187,7 @@ def resultado(request, pk):
     respuestas_elegidas = []
     respuestas_correctas = []
     aux = []
-    print(preg_y_resp_lista)
+
     for preg_resp in preg_y_resp_lista:
          preguntas_respuestas.append(preg_resp.replace("{", "").replace("}","").replace("'","").replace("rta_correcta", "Respuesta correcta").replace("rta_elegida", "Respuesta elegida").replace("[", "").replace("]", ""))
 
@@ -150,9 +213,6 @@ def resultado(request, pk):
     for pregunta in range(len(preguntas)):
         preguntas[pregunta] = preguntas[pregunta][0].replace("[", "").replace("]", "").replace(":", "")
 
-    #print(preguntas)
-    # print(respuestas_correctas)
-    # print(respuestas_elegidas)
 
     context = {
         "resultado": resultado,

@@ -10,21 +10,56 @@
 
 {% block content %}
 <div class="text-center mb-5">
-  <h1>Perfil de {{request.user}}</h1>
+  <h1>Perfil de {{usuario}}</h1>
 </div>
 
-<h4>
-  {% for resultado in resultados %}
-  <p><a href="/resultado/{{resultado.0}}">
-    Cuestionario: {{ resultado.1 }}<br>
-    Realizado: {{ resultado.3 }}<br>
-    Puntaje: {{ resultado.2 }}<br>
-    ID: {{ resultado.0 }} <br>
-    <hr>
-    </a>
-  </p>
-  {% endfor %}
-</h4>
+<div class="row">
+  <div class="text-center h4 col-7 " >
+    {% for resultado in resultados %}
+    <p><a href="/resultado/{{resultado.0}}">
+      Cuestionario: {{ resultado.1 }}<br>
+      Realizado: {{ resultado.3 }}<br>
+      Puntaje: {{ resultado.2 }}<br>
+      ID: {{ resultado.0 }} <br>
+      <hr>
+      </a>
+    </p>
+    {% endfor %}
+  </div>
+
+  <div class="accordion col-4" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Estadísticas de juego
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          {% if cuestionario_mas_jugado == None %}
+            <strong>{{usuario}} no resolvió ningún cuestionario.</strong>
+          {% else %}
+            Cuestionario más jugado: <strong>{{cuestionario_mas_jugado}}</strong><br>
+            Categoría más jugada: <strong>{{categoria_mas_jugada}}</strong><br>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Estadísticas de la cuenta
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          Se conectó por ultima vez: <strong>{{usuario.last_login}}</strong><br>
+          Usuario desde: <strong>{{usuario.date_joined}}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

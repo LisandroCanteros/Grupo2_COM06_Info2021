@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+  Agregar respuesta
+{% endblock %}
+
+{% block content %}
+<div class="text-center ml-3">
+  <form method="post">
+    <h1>Agregar respuesta</h1>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-outline-primary mb-3" name="button">Guardar y cargar otra</button>
+    <a href="{% url 'agregar_pregunta' %}" class="btn btn-outline-primary mb-3" name="button">Agregar una pregunta</a><br>
+    <a class="btn btn-info" href="{% url 'pagina_principal' %}">Volver a la página principal</a>
+  </form>
+</div>
+
+
+{% endblock %}

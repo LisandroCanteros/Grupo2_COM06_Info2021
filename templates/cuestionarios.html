@@ -32,28 +32,33 @@
 </div>
 
 <h1>Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
-<a class="btn btn-danger ml-3" href="/categorias/">Volver a categorías</a>
+<a class="btn btn-info ml-3" href="/categorias/">Volver a categorías</a>
 <hr>
-{% for obj in object_list %}
-<!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
-  {% if obj.categoria|stringformat:"s" == request.path|slice:"12:-1" %}
-      <button
-          class="btn btn-link modal-button"
-          data-pk="{{obj.pk}}"
-          data-nombre="{{obj.nombre}}"
-          data-categoria="{{obj.categoria}}"
-          data-max_preguntas="{{obj.max_preguntas}}"
-          data-dificultad="{{obj.dificultad}}"
-          data-tiempo_limite="{{obj.tiempo_limite}}"
-          data-puntaje_aprobacion="{{obj.puntaje_para_aprobar}}"
-          data-bs-toggle="modal"
-          data-bs-target="#comenzarCuestionarioModal">
-          <h2>{{obj.nombre}}</h2>
-        </button>
-      <br>
-    {% endif %}
 
-{% endfor %}
+<div class="text-center">
+  {% for obj in object_list %}
+  <!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
+    {% if obj.categoria|stringformat:"s" == request.path|slice:"12:-1" %}
+        <button
+            class="btn btn-link modal-button"
+            data-pk="{{obj.pk}}"
+            data-nombre="{{obj.nombre}}"
+            data-categoria="{{obj.categoria}}"
+            data-max_preguntas="{{obj.max_preguntas}}"
+            data-dificultad="{{obj.dificultad}}"
+            data-tiempo_limite="{{obj.tiempo_limite}}"
+            data-puntaje_aprobacion="{{obj.puntaje_para_aprobar}}"
+            data-bs-toggle="modal"
+            data-bs-target="#comenzarCuestionarioModal">
+            <h2>{{obj.nombre}}</h2>
+          </button>
+          <br>
+          <a class="btn btn-primary btn-lg mt-3" href="{% url 'editar_cuestionario' obj.id %}">Editar cuestionario</a>
+          <a class="btn btn-danger btn-lg mt-3" href="{% url 'eliminar_cuestionario' obj.id %}">Eliminar cuestionario</a>
+        <br>
+      {% endif %}
 
+  {% endfor %}
+  </div>
 
 {% endblock %}

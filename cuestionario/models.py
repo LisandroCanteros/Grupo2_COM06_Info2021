@@ -36,7 +36,7 @@ class Cuestionario(models.Model):
     dificultad = models.CharField(max_length=20, choices=DIFICULTADES)
 
     def __str__(self):
-        return f"{self.nombre} - {self.pk}"
+        return f"{self.nombre}"
 
     def obtener_preguntas(self):
         preguntas = list(self.pregunta_set.all())
