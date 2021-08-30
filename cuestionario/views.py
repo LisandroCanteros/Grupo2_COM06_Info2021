@@ -180,6 +180,7 @@ def guardar_resultados(request, categoria, pk):
 
 def resultado(request, pk):
     resultado = Resultado.objects.get(pk=pk)
+    usuario = resultado.usuario
     preg_y_resp_lista = resultado.respuestas.split('}},')
     preguntas_respuestas = []
     preguntas = []
@@ -215,6 +216,7 @@ def resultado(request, pk):
 
 
     context = {
+        "usuario": usuario,
         "resultado": resultado,
         "zip": zip(preguntas, respuestas_correctas, respuestas_elegidas)
     }
