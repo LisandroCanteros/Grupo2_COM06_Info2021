@@ -139,8 +139,8 @@ def guardar_resultados(request, categoria, pk):
         resultados = []
         respuesta_correcta = None
 
-        cont = 0
         for pregunta in lista_preguntas:
+            cont = 0
             for preg in data_.keys():
                 rta_elegidas = ""
                 rta_correctas = ""
@@ -153,18 +153,13 @@ def guardar_resultados(request, categoria, pk):
                     if respuesta.es_correcta:
                         rta_correctas += respuesta.texto + " "
 
-
-
                 if pregunta_actual == str(respuestas[cont].pregunta):
                     if rta_elegidas == " ":
                         rta_elegidas = "Sin contestar"
                     elif rta_correctas == rta_elegidas:
                         puntaje += 1
-
                     resultados.append({str(pregunta): {'rta_correcta': rta_correctas, "rta_elegida": rta_elegidas}})
-
             cont += 1
-
 
         puntaje_ = puntaje * multiplicador
         lista_preguntas_ = []

@@ -41,10 +41,11 @@
 {% for obj in object_list %}
 <!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
 
-    <a class="btn btn-link modal-button" href={{obj.categoria}}>
-      <h2>{{obj}}</h2>
 
-    </a>
+      <a class="btn btn-link modal-button" href="{{obj}}">
+        <h2>{{obj.categoria}}</h2>
+      </a>
+
 
     <br>
 {% endfor %}
