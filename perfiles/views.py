@@ -54,7 +54,7 @@ def UserLogin(request):
 def UserProfile(request, nombre):
     usuario = User.objects.get(username=nombre)
     if usuario.is_authenticated:
-        resultados = Resultado.objects.filter(usuario=usuario).values()
+        resultados = Resultado.objects.filter(usuario=usuario).values().order_by('-fecha')
         lista_resultados = []
 
         for resultado in resultados:
@@ -65,7 +65,6 @@ def UserProfile(request, nombre):
             cuest_nombre = cuestionario[0]['nombre']
             id = resultado['id']
             lista_resultados.append((id, cuest_nombre, puntaje, fecha))
-
 
         cuest_mas_jugado = cuestionario_mas_jugado(usuario)
         categ_mas_jugada = categoria_mas_jugada(usuario)
