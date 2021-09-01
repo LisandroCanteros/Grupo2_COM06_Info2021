@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<h1 class="ml-3">Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
+<h3 class="ml-3">Cuestionarios de {{ request.path|slice:"12:-1" }}</h3>
 <a class="btn btn-info ml-3" href="/categorias/">Volver a categorías</a>
 <hr>
 
@@ -57,9 +57,15 @@
           <a class="btn btn-primary btn-lg mt-3" href="{% url 'editar_cuestionario' obj.id %}">Editar cuestionario</a>
           <a class="btn btn-danger btn-lg mt-3" href="{% url 'eliminar_cuestionario' obj.id %}">Eliminar cuestionario</a>
         <br>
+        <br>
       {% endif %}
 
   {% endfor %}
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 
 {% endblock %}
