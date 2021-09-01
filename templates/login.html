@@ -1,24 +1,50 @@
 {% extends "base.html" %}
+{% load materializecss %}
 
 {% block titulo %}
   Iniciar sesión
 {% endblock %}
 
+{% block css %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function(){
+
+      // Initialize materialize data picker
+      $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+      $('select').formSelect();
+
+    });
+  </script>
+{% endblock %}
+
 {% block content %}
+<div class="container">
+
   <form method="post">
     {% csrf_token %}
 
     <div class="text-center">
       <!-- muestra mensaje de error al ingresar usuario o contraseñas incorrectos -->
       {% for message in messages %}
-          <div class="alert alert-danger mx-auto mt-3" style="width: 350px;" role="alert">
-              <a class="close" href="" data-dismiss="alert">×</a>
-                 {{ message }}
-          </div>
+      <div class="alert alert-danger mx-auto mt-3" style="width: 350px;" role="alert">
+        <a class="close" href="" data-dismiss="alert">×</a>
+        {{ message }}
+      </div>
       {% endfor %}
 
       <h3>Iniciar sesión</h3>
-      {{form.as_p}}
+      {{form|materializecss}}
       <button type="submit" class="btn btn-outline-primary mb-3" name="button">Iniciar sesión</button>
 
       <div class="alert alert-info" role="alert">
@@ -27,5 +53,6 @@
 
     </div>
   </form>
+</div>
 
 {% endblock %}

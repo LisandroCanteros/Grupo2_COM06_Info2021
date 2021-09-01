@@ -12,6 +12,9 @@
           <li class="nav-item">
               <a class="nav-link" href="/">Inicio</a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+          </li>
 
           <!-- si el usuario está registrado, mostrar botón para cerrar sesión sino mostrar registro e inciar sesión -->
           {% if user.is_authenticated %}

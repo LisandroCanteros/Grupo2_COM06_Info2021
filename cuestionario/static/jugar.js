@@ -60,8 +60,6 @@ const startTimer = (tiempo_limite)=> {
         clearInterval(Timer)
         alert("TIME OVER")
         enviarDatos()
-        cuadroResultados.innerHTML =`<a href="javascript:fbshareCurrentPage()" target="_blank" alt="Share on Facebook">Facebook</a>
-        `
 
       })
     }
@@ -144,7 +142,7 @@ const enviarDatos = () => {
     success: function(response){
       const resultados = response.resultado //haciendo uso de response se pueden acceder a los valores pasados como diccionario desde la vista (guardar_resultados)
       cuestForm.classList.add('not-visible') //escondo el formulario (las opciones)
-      cuadroPuntaje.innerHTML =`${response.aprobado? 'Aprobado. ' : 'Desaprobado. '} Tu puntaje es: ${response.puntaje.toFixed(2)}% <br> `
+      cuadroPuntaje.innerHTML =`${response.aprobado? 'Aprobado. ' : 'Desaprobado. '} Tu puntaje es: ${response.puntaje.toFixed(2)}% <br>`
 
 
       resultados.forEach(result => {
@@ -174,6 +172,7 @@ const enviarDatos = () => {
                 resDiv.innerHTML += ` <br> Respuesta correcta: ${correcta}`
                 resDiv.innerHTML += ` <br> Respuesta elegida: ${respuesta}`
               }
+
             }
             cuadroResultados.append(resDiv)
           }

@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="text-center ml-3">
+<div class="text-center mt-4 ml-3">
   <form action="{% url 'eliminar_cuestionario' cuestionario.id %}"method="post">
     <h1>Usted está por eliminar el cuestionario <strong>{{cuestionario}}</strong></h1>
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit" class="btn btn-danger btn-lg ml-3" name="button">Eliminar</button>
-    <a class="btn btn-primary btn-lg ml-3" href="/categorias">Cancelar</a>
+    <button type="submit" class="btn btn-danger btn-lg ml-3 mt-3" name="button">Eliminar</button>
+    <a class="btn btn-primary btn-lg ml-3 mt-3" href="/categorias">Cancelar</a>
   </form>
 </div>
 

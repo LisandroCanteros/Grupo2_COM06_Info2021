@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% load static %}
 {% load social_share %}
 
@@ -11,40 +10,42 @@
 
 {% block content %}
 <div class="text-center">
-  <h1>Usuario: {{ usuario }}
-  <br>
-  {{resultado.cuestionario}}
-  <br>
-  {{resultado.puntaje}}
-  <br>
+  <h1>
+    {{resultado.cuestionario}}
+    <br>
+    Usuario: {{ usuario }}
+    <br>
+    Puntaje: {{resultado.puntaje}}
+    <br>
   </h1>
 </div>
 
-
-<h3>
-  {% for pregunta, rcorrecta,relegida in zip %}
+<div class="container">
+  <h3>
+    {% for pregunta, rcorrecta,relegida in zip %}
 
     {% if relegida|slice:"19:" == rcorrecta|slice:"19:" %}
-      <div class="alert alert-success" role="alert">
-        {{pregunta}}<br>
-        {{relegida}}<br>
-        {{rcorrecta}}<br>
-      </div>
+    <div class="alert alert-success" role="alert">
+      {{pregunta}}<br>
+      {{relegida}}<br>
+      {{rcorrecta}}<br>
+    </div>
     {% else %}
-      <div class="alert alert-danger" role="alert">
-        {{pregunta}}<br>
-        {{relegida}}<br>
-        {{rcorrecta}}<br>
-      </div>
+    <div class="alert alert-danger" role="alert">
+      {{pregunta}}<br>
+      {{relegida}}<br>
+      {{rcorrecta}}<br>
+    </div>
     {% endif %}
-  <hr>
-  {% endfor %}
-</h3>
+    <hr>
+    {% endfor %}
+  </h3>
 
-<div class="text-center h2">
-  {% post_to_whatsapp object_or_url "Compartir vía WhatsApp" %}
-  {% post_to_facebook object_or_url "Compartir en Facebook"  %}
-  {% post_to_twitter "Completé el cuestionario {{resultado.cuestionario}} y obtuve un puntaje de {{resultado.puntaje}}" object_or_url "Compartir en Twitter" %}
+  <div class="text-center h2">
+    {% post_to_whatsapp object_or_url "Compartir vía WhatsApp" %}
+    {% post_to_facebook object_or_url "Compartir en Facebook"  %}
+    {% post_to_twitter "Completé el cuestionario {{resultado.cuestionario}} y obtuve un puntaje de {{resultado.puntaje}}" object_or_url "Compartir en Twitter" %}
+  </div>
 </div>
 
 

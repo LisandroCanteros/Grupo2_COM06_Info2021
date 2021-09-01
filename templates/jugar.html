@@ -1,6 +1,10 @@
 {% extends "base.html" %}
-
+{% load materializecss %}
 {% load static %}
+
+{% block css %}
+{% endblock %}
+
 
 {% block scripts %}
 <!-- js para mostrar información del cuestionario al clickear el boton -->
@@ -11,8 +15,9 @@
   {{obj.nombre}}
 {% endblock %}
 
-{% block content %}
 
+{% block content %}
+<div class="container">
 <div class="row">
   <div class="col ml-3">
     <h1><b>{{obj.nombre}}</b></h1>
@@ -20,6 +25,7 @@
   </div>
 </div>
 <a class="btn btn-info ml-3" href="/categorias/{{obj.categoria}}">Volver atrás</a>
+
 
 
 <div class="text-center alert alert-danger mx-auto mt-3" style="width: 350px; position:fixed; bottom:10px; left:40%; " role="alert" id="timer"></div>
@@ -30,18 +36,20 @@
 </div> -->
 
 <hr>
-<form class="mt-3 mb-3 ml-3" id="formulario-cuestionario" method="post">
-  {% csrf_token %}
-  <div id="formulario-caja"></div>
-  <button type="submit" class="btn btn-primary mt-3" name="button">Enviar respuestas</button>
-</form>
+
+  <form class="mt-3 mb-3 ml-3 col-12" id="formulario-cuestionario" method="post">
+    {% csrf_token %}
+    <div id="formulario-caja"></div>
+    <button type="submit" class="btn btn-primary mt-3" name="button">Enviar respuestas</button>
+  </form>
 
 
 
-<div class="text-center ml-3 h3" id="cuadro-puntaje"></div>
+  <div class="text-center ml-3 h3" id="cuadro-puntaje"></div>
 
-<div class="ml-3" id="cuadro-resultados">
+  <div class="ml-3" id="cuadro-resultados">
+
+  </div>
 
 </div>
-
 {% endblock %}

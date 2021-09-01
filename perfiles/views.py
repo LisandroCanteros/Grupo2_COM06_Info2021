@@ -51,6 +51,9 @@ def UserLogin(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+def nosotros(request):
+    return render(request, "nosotros.html")
+
 def UserProfile(request, nombre):
     usuario = User.objects.get(username=nombre)
     if usuario.is_authenticated:

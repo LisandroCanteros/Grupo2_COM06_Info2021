@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<h1>Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
+<h1 class="ml-3">Cuestionarios de {{ request.path|slice:"12:-1" }}</h1>
 <a class="btn btn-info ml-3" href="/categorias/">Volver a categorías</a>
 <hr>
 
@@ -39,6 +39,7 @@
   {% for obj in object_list %}
   <!-- atributos del cuestionario a mostrar al presionar el boton para jugar -->
     {% if obj.categoria|stringformat:"s" == request.path|slice:"12:-1" %}
+    <br>
         <button
             class="btn btn-link modal-button"
             data-pk="{{obj.pk}}"
@@ -50,7 +51,7 @@
             data-puntaje_aprobacion="{{obj.puntaje_para_aprobar}}"
             data-bs-toggle="modal"
             data-bs-target="#comenzarCuestionarioModal">
-            <h2>{{obj.nombre}}</h2>
+            {{obj.nombre}}
           </button>
           <br>
           <a class="btn btn-primary btn-lg mt-3" href="{% url 'editar_cuestionario' obj.id %}">Editar cuestionario</a>

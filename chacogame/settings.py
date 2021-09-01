@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cuestionario',
     'resultados',
     'perfiles',
+    'materializecssform',
 ]
 
 MIDDLEWARE = [
