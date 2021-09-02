@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load materializecss %}
 {% load static %}
 
 {% block scripts %}
@@ -54,10 +55,12 @@
             {{obj.nombre}}
           </button>
           <br>
-          <a class="btn btn-primary btn-lg mt-3" href="{% url 'editar_cuestionario' obj.id %}">Editar cuestionario</a>
-          <a class="btn btn-danger btn-lg mt-3" href="{% url 'eliminar_cuestionario' obj.id %}">Eliminar cuestionario</a>
-        <br>
-        <br>
+          {% if request.user.is_staff %}
+            <a class="btn btn-primary btn-lg mt-3" href="{% url 'editar_cuestionario' obj.id %}">Editar cuestionario</a>
+            <a class="btn btn-danger btn-lg mt-3" href="{% url 'eliminar_cuestionario' obj.id %}">Eliminar cuestionario</a>
+            <br>
+            <br>
+          {% endif %}
       {% endif %}
 
   {% endfor %}

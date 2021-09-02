@@ -2,18 +2,9 @@ from django.db import models
 import random
 # Create your models here.
 
-CATEGORIAS = (
-    ("Cultura y Arte", "CULTURA Y ARTE"),
-    ("Historia", "HISTORIA"),
-    ("Deportes", "DEPORTES"),
-    ("Geografia", "GEOGRAFÍA"),
-    ("Economia", "ECONOMÍA"),
-    ("Ciencia y Educacion", "CIENCIA Y EDUCACIÓN"),
-    ("Entretenimiento", "ENTRETENIMIENTO"),
-)
 
 class Categoria(models.Model):
-    categoria = models.CharField(max_length=300, choices = CATEGORIAS)
+    categoria = models.CharField(max_length=300)
     descripcion = models.CharField(max_length=500)
 
     def __str__(self):
