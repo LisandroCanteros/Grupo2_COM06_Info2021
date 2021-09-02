@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from preguntas.models import Pregunta, Respuesta
 from resultados.models import Resultado
 from .models import Cuestionario, Categoria
-from .formularios import CuestionarioForm, RespuestaForm, PreguntaForm
+from .formularios import CuestionarioForm, RespuestaForm, PreguntaForm, CategoriaForm
 # Create your views here.
 
 def pagina_principal(request):
@@ -48,6 +48,17 @@ def eliminar_cuestionario(request, pk):
     context = {'cuestionario': cuestionario}
     return render(request, "eliminar_cuestionario.html", context)
 
+@staff_member_required
+def agregar_categoria(request):
+    form = CategoriaForm()
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {
+        'form': form
+    }
+    return render(request, "agregar_categoria.html", context)
 
 @staff_member_required
 def nueva_pregunta(request):

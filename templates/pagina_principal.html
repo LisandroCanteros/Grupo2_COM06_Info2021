@@ -24,6 +24,7 @@
     <!-- si el usuario es staff, también muestro un boton que lo redirige a la pantalla de administración -->
       <br>
       <a class="btn btn-primary btn-lg mt-3" href="/admin/">Abrir panel de administración</a> <br>
+      <a class="btn btn-primary btn-lg mt-3" href="{% url 'agregar_categoria' %}">Agregar una nueva categoría</a> <br>
       <a class="btn btn-primary btn-lg mt-3" href="{% url 'nuevo_cuestionario' %}">Crear nuevo cuestionario</a><br>
       <a class="btn btn-primary btn-lg mt-3" href="{% url 'agregar_pregunta' %}">Agregar pregunta a un cuestionario</a> <br>
       <a class="btn btn-primary btn-lg mt-3" href="{% url 'agregar_respuesta' %}">Agregar respuesta a una pregunta</a>

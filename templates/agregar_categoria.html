@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load materializecss %}
+
+{% block css %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block javascript %}
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function(){
+
+      // Initialize materialize data picker
+      $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+      $('select').formSelect();
+
+    });
+  </script>
+{% endblock %}
+
+{% block titulo %}
+  Agregar categoría
+{% endblock %}
+
+{% block content %}
+<h1 align="center">Agregar categoría</h1>
+
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{form|materializecss}}
+
+    <div class="center">
+      <button type="submit" class="btn btn-outline-primary mb-3" name="button">Guardar y cargar otra</button>
+      <a class="btn btn-outline-primary mb-3" href="{% url 'nuevo_cuestionario' %}">Agregar un cuestionario</a><br>
+      <a class="btn btn-info" href="{% url 'pagina_principal' %}">Volver a la página principal</a>
+    </div>
+
+  </form>
+</div>
+
+
+{% endblock %}
