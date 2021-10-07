@@ -2,6 +2,8 @@
 
 Proyecto final - Informatorio Chaco - Etapa 2: "Programación y desarrollo web"
 
+[CLICK HERE - Enlace al proyecto en Heroku](https://chacogame.herokuapp.com/)
+
 Integrantes:  
     Fátima Loreley Del Fabro  
     Lisandro Ariel Canteros  
